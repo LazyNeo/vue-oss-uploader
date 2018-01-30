@@ -1,8 +1,9 @@
 # vue 阿里云上传组件
 
-## [本测试项目启动方法](./startup.md)
-## [示例链接](https://lazyneo.github.io/oss/#/)
-## [组件配置项](config.md)
+##### [测试项目git地址](https://github.com/LazyNeo/vue-oss-uploader)
+##### [本测试项目启动方法](./startup.md)
+##### [示例链接](https://lazyneo.github.io/oss/#/)
+##### [组件配置项](config.md)
 
 ## 实践解释
 本文主要介绍如何在vue项目中使用web直传方式上传阿里云oss图片
@@ -11,13 +12,13 @@
 心急的同学直接去下载组件使用就好了，反正也很简单，没用弄npm，直接复制代码使用吧 [组件地址](https://github.com/LazyNeo/vue-oss-uploader/blob/master/src/components/uploader.vue)
 
 使用过程中我碰到以下的坑：
-1. 本文使用的是js引入形式的阿里云sdk，用npm形式的sdk会需要一些后端的node功能，不能用于web直传。
+#### 1. 本文使用的是js引入形式的阿里云sdk，用npm形式的sdk会需要一些后端的node功能，不能用于web直传。
 可以直接在html里面加上script标签
 ```html
 <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-4.3.0.min.js"></script> 
 ```
 > 组件里我包装了一个异步获取sdk的方法LoadJS，感兴趣的可以看一下
-2. 使用js引入形式的sdk会有一个异步的问题，就是client初始化的时候sdk可能还没加载好，我是在vue的mouted钩子函数内设置了一个定时器，当SDK加载的完成之后再来初始化client
+#### 2. 使用js引入形式的sdk会有一个异步的问题，就是client初始化的时候sdk可能还没加载好，我是在vue的mouted钩子函数内设置了一个定时器，当SDK加载的完成之后再来初始化client
 
 ```JavaScript
 let timer = setInterval(() => {
@@ -31,11 +32,11 @@ let timer = setInterval(() => {
   }
 }, 500)
 ```
-3. 如果你的项目是https环境下的，需要保证初始化client的时候配置secure为true，不然无法上传文件
-4. 在默认情况下，保存的图片名会取一个随机的字符串，但是同一张图片多次上传就会保存多个相同图片，这边我做了一个优化，将图片的大小和高宽拼接成一个字符串，再对这个字符串进行md5 hash化处理，这样同一张图片上传多次也只会保存一张
+#### 3. 如果你的项目是https环境下的，需要保证初始化client的时候配置secure为true，不然无法上传文件
+#### 4. 在默认情况下，保存的图片名会取一个随机的字符串，但是同一张图片多次上传就会保存多个相同图片，这边我做了一个优化，将图片的大小和高宽拼接成一个字符串，再对这个字符串进行md5 hash化处理，这样同一张图片上传多次也只会保存一张
 
 有什么问题或者疑问，请在下方评论或者在[github](https://github.com/LazyNeo/vue-oss-uploader)上提issue都可以
-### 参考链接
+#### 参考链接
 1. [阿里云oss文档](http://imgs-storage.cdn.aliyuncs.com/help/oss/oss%20api%2020140828.pdf)
 2. [vue官网](https://vuefe.cn/v2/guide/installation.html)
 
