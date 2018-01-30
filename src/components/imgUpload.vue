@@ -1,6 +1,11 @@
 <template lang="html">
   <div class="form-container">
     <el-form ref="form" label-width="80px">
+      <el-alert
+        v-if="errorShow"
+        :title="errorMsg"
+        type="error">
+      </el-alert>
       <el-form-item label="阿里云bucket">
         <el-input v-model="keySet.bucket"></el-input>
       </el-form-item>
@@ -35,7 +40,7 @@
         <el-input v-model="name"></el-input>
       </el-form-item>
       <el-form-item label="点击上传">
-        <imgUploader :path="path" :debug="true" :name-mode="nameMode" :keySet="keySet" :name="name" v-on:success="uploaded"></imgUploader>
+        <imgUploader :path="path" :debug="true" :name-mode="nameMode" :keySet="keySet" :name="name" v-on:success="uploaded" @error="showError"></imgUploader>
       </el-form-item>
       <el-form-item label="上传后文件路径">
       <p>{{filename}}</p>
@@ -54,22 +59,25 @@
         path: 'test/',
         name: 'img1',
         nameMode: 1,
-        definedName: false,
-        defaultName: false,
-        profexShow: false,
+        errorShow: false,
+        errorMsg: '',
         keySet: {
-          bucket: 'm6fresh',
-          key: 'LTAI10BhRo3Me3Y3',
+          bucket: '',
+          key: '',
           region: 'shanghai',
-          secret: 'rMdTzbCmJCXOSMUexGsHG24v6rGljJ'
+          secret: ''
         },
-        profexName: '',
         filename: ''
       }
     },
     methods: {
       uploaded (filename) {
         this.filename = 'https://' + this.keySet.bucket + '.oss-cn-' + this.keySet.region + '.aliyuncs.com/' + filename
+      },
+      showError (e) {
+        this.errorShow = true
+        console.log(e)
+        this.errorMsg = e.msg || JSON.stringify(e)
       }
     },
     components: {

@@ -11,7 +11,7 @@
     data () {
       return {
         id: 'upload-input-file',
-        client: {},
+        client: null,
         imgReg: /\.(png|jpe?g|gif|svg)(\?.*)?$/
       }
     },
@@ -52,7 +52,7 @@
         type: Object,
         default () {
           return {
-            id: '',
+            key: '',
             region: '',
             secret: '',
             bucket: ''
@@ -79,23 +79,27 @@
     methods: {
       init () {
         if (!this.keySet.bucket) {
+          this.$emit('error', {msg: '请设置bucket'})
           console.log('请设置bucket')
           return
         }
         if (!this.keySet.secret) {
+          this.$emit('error', {msg: '请设置secret'})
           console.log('请设置secret')
           return
         }
         if (!this.keySet.key) {
-          console.log('请设置id')
+          this.$emit('error', {msg: '请设置key'})
+          console.log('请设置key')
           return
         }
         if (!this.keySet.region) {
+          this.$emit('error', {msg: '请设置区域'})
           console.log('请设置区域')
           return
         }
         this.client = new OSS.Wrapper({
-          endpoint: 'https://oss-cn-shanghai.aliyuncs.com',
+          endpoint: 'https://oss-cn-' + this.keySet.region + '.aliyuncs.com',
           accessKeyId: this.keySet.key,
           accessKeySecret: this.keySet.secret,
           // https时需要设置为true
@@ -106,6 +110,10 @@
       },
       upload (e) {
         if (e.target.files.length === 0) {
+          return
+        }
+        if (!this.client) {
+          this.$emit('error', {msg: 'oss初始化未完成'})
           return
         }
         let file = e.target.files[0]
@@ -142,7 +150,7 @@
           this.$emit('error', err)
         })
       },
-      LoadJS: function (sId, fileUrl, callback) {
+      LoadJS (sId, fileUrl, callback) {
         let dom = document.querySelector(sId)
         if (!dom) {
           var script = document.createElement('script')
