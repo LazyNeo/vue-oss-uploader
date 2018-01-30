@@ -1,0 +1,88 @@
+<template lang="html">
+  <div class="form-container">
+    <el-form ref="form" label-width="80px">
+      <el-form-item label="阿里云bucket">
+        <el-input v-model="keySet.bucket"></el-input>
+      </el-form-item>
+      <el-form-item label="阿里云key">
+        <el-input v-model="keySet.key"></el-input>
+      </el-form-item>
+      <el-form-item label="阿里云secret">
+        <el-input v-model="keySet.secret"></el-input>
+      </el-form-item>
+      <el-form-item label="所在区域">
+        <el-select v-model="keySet.region" placeholder="请选择所在区域">
+          <el-option label="上海数据中心" value="shanghai"></el-option>
+          <el-option label="杭州数据中心" value="hangzhou"></el-option>
+          <el-option label="青岛数据中心" value="qingdao"></el-option>
+          <el-option label="北京数据中心" value="beijing"></el-option>
+          <el-option label="香港数据中心" value="hongkong"></el-option>
+          <el-option label="深圳数据中心" value="shenzhen"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="路径">
+        <el-input v-model="path"></el-input>
+      </el-form-item>
+      <el-form-item label="命名规则">
+        <el-select v-model="nameMode" placeholder="请选择命名规则">
+          <el-option label="随机名称" :value="1"></el-option>
+          <el-option label="默认名称" :value="2"></el-option>
+          <el-option label="自定义名称" :value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      
+      <el-form-item v-if="nameMode == 3" label="自定义名称">
+        <el-input v-model="name"></el-input>
+      </el-form-item>
+      <el-form-item label="点击上传">
+        <imgUploader :path="path" :debug="true" :name-mode="nameMode" :keySet="keySet" :name="name" v-on:success="uploaded"></imgUploader>
+      </el-form-item>
+      <el-form-item label="上传后文件路径">
+      <p>{{filename}}</p>
+    </el-form-item>
+    </el-form>
+    
+    
+  </div>
+</template>
+
+<script>
+  import imgUploader from './uploader'
+  export default {
+    data () {
+      return {
+        path: 'test/',
+        name: 'img1',
+        nameMode: 1,
+        definedName: false,
+        defaultName: false,
+        profexShow: false,
+        keySet: {
+          bucket: 'm6fresh',
+          key: 'LTAI10BhRo3Me3Y3',
+          region: 'shanghai',
+          secret: 'rMdTzbCmJCXOSMUexGsHG24v6rGljJ'
+        },
+        profexName: '',
+        filename: ''
+      }
+    },
+    methods: {
+      uploaded (filename) {
+        this.filename = 'https://' + this.keySet.bucket + '.oss-cn-' + this.keySet.region + '.aliyuncs.com/' + filename
+      }
+    },
+    components: {
+      imgUploader
+    }
+  }
+</script>
+
+<style lang="less" scoped>
+  .form-container{
+    width: 60vw;
+    margin-left: 20vw;
+  }
+</style>
+
+
