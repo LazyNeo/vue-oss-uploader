@@ -10,6 +10,18 @@
 默认读者对vue框架和阿里云oss有一定的了解
 整体的流程是加载好阿里云sdk -> 初始化上传客户端client -> 等待文件选择 -> 文件选择进行上传 -> 分发上传结果  
 心急的同学直接去下载组件使用就好了，反正也很简单，没用弄npm，直接复制代码使用吧 [组件地址](https://github.com/LazyNeo/vue-oss-uploader/blob/master/src/components/uploader.vue)
+> npm 使用
+
+```
+$ npm i vue-oss-uploader
+```
+
+vue中引用
+```javascript
+import vueOssUploader from 'vue-oss-uploader'
+import 'vue-oss-uploader/npm/static/css/vue-oss-uploader.min.css'
+Vue.use(vueOssUploader)
+```
 
 使用过程中我碰到以下的坑：
 #### 1. 本文使用的是js引入形式的阿里云sdk，用npm形式的sdk会需要一些后端的node功能，不能用于web直传。

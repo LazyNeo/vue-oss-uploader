@@ -1,25 +1,26 @@
 {
-  "name": "vue-oss-iploader",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
+  "name": "vue-oss-uploader",
+  "version": "0.1.0",
+  "description": "一个web直传阿里云oss插件",
   "author": "NeoPasser <535178368@qq.com>",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "npmpack": "node build/buildNpm.js"
   },
   "dependencies": {
     "blueimp-md5": "^2.10.0",
-    "element-ui": "^2.0.11",
-    "eslint-plugin-html": "^4.0.2",
-    "less": "^2.7.3",
-    "less-loader": "^4.0.5",
-    "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue": "^2.5.2"
   },
   "devDependencies": {
+    "less-loader": "^4.0.5",
+    "less": "^2.7.3",
+    "element-ui": "^2.0.11",
+    "vue-router": "^3.0.1",
+    "eslint-plugin-html": "^4.0.2",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
@@ -74,5 +75,23 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": "npm/vue-oss-uploader.min.js",
+  "files": [
+    "npm",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LazyNeo/vue-oss-uploader.git"
+  },
+  "keywords": [
+    "oss",
+    "vue"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LazyNeo/vue-oss-uploader/issues"
+  },
+  "homepage": "https://github.com/LazyNeo/vue-oss-uploader#readme"
 }

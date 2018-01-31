@@ -52,7 +52,6 @@
 </template>
 
 <script>
-  import imgUploader from './uploader'
   export default {
     data () {
       return {

@@ -8,6 +8,7 @@
 <script>
   import md5 from 'blueimp-md5'
   export default {
+    name: 'vueOssUploader',
     data () {
       return {
         id: 'upload-input-file',
@@ -80,22 +81,18 @@
       init () {
         if (!this.keySet.bucket) {
           this.$emit('error', {msg: '请设置bucket'})
-          console.log('请设置bucket')
           return
         }
         if (!this.keySet.secret) {
           this.$emit('error', {msg: '请设置secret'})
-          console.log('请设置secret')
           return
         }
         if (!this.keySet.key) {
           this.$emit('error', {msg: '请设置key'})
-          console.log('请设置key')
           return
         }
         if (!this.keySet.region) {
           this.$emit('error', {msg: '请设置区域'})
-          console.log('请设置区域')
           return
         }
         this.client = new OSS.Wrapper({
@@ -106,7 +103,6 @@
           secure: true,
           bucket: this.keySet.bucket
         })
-        console.log(this.client)
       },
       upload (e) {
         if (e.target.files.length === 0) {
@@ -129,7 +125,6 @@
           return
         }
         if (this.fileSuffix !== '' && ('.' + this.fileSuffix) !== this.get_suffix(file.name)) {
-          console.log(this.fileSuffix, this.get_suffix(file.name))
           alert('必须选择类型为的' + this.fileSuffix + '文件')
           return
         }
@@ -141,12 +136,12 @@
           let token = file.name + file.lastModifiedDate + file.size + file.type
           storeAs = this.path + md5(token) + this.get_suffix(file.name)
         }
-        console.log(file.name + ' => ' + storeAs)
+        this.debug && console.log(file.name + ' => ' + storeAs)
         this.client.multipartUpload(storeAs, file).then((result) => {
-          console.log(result)
+          this.debug && console.log(result)
           this.$emit('success', storeAs)
         }).catch((err) => {
-          console.log(err)
+          this.debug && console.log(err)
           this.$emit('error', err)
         })
       },
