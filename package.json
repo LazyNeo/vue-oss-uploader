@@ -1,6 +1,6 @@
 {
   "name": "vue-oss-uploader",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "一个web直传阿里云oss插件",
   "author": "NeoPasser <535178368@qq.com>",
   "private": false,
@@ -12,10 +12,10 @@
     "npmpack": "node build/buildNpm.js"
   },
   "dependencies": {
-    "blueimp-md5": "^2.10.0",
     "vue": "^2.5.2"
   },
   "devDependencies": {
+    "blueimp-md5": "^2.10.0",
     "less-loader": "^4.0.5",
     "less": "^2.7.3",
     "element-ui": "^2.0.11",

@@ -187,8 +187,8 @@
   }
 </script>
 
-<style lang="less" scoped>
-  .upload-input {
+<style lang="less">
+  .vue-oss-upload-input {
     position: relative;
     display: inline-block;
     text-align: center;
