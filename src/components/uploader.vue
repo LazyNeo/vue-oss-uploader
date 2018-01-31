@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="upload-input" v-bind:style="initSize">
+  <div class="vue-oss-upload-input" v-bind:style="initSize">
     <i>+</i>
     <input type="file" :id="id" @change="upload"/>
   </div>
