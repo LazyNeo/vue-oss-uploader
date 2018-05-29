@@ -40,7 +40,7 @@
         <el-input v-model="name"></el-input>
       </el-form-item>
       <el-form-item label="点击上传">
-        <imgUploader :path="path" :debug="true" :name-mode="nameMode" :keySet="keySet" :name="name" v-on:success="uploaded" @error="showError"></imgUploader>
+        <vueOssUploader :path="path" :debug="true" :name-mode="nameMode" :keySet="keySet" :name="name" v-on:success="uploaded" @error="showError"></vueOssUploader>
       </el-form-item>
       <el-form-item label="上传后文件路径">
       <p>{{filename}}</p>
@@ -78,9 +78,6 @@
         console.log(e)
         this.errorMsg = e.msg || JSON.stringify(e)
       }
-    },
-    components: {
-      imgUploader
     }
   }
 </script>

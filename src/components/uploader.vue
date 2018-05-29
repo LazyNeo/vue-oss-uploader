@@ -27,7 +27,7 @@
       },
       nameMode: {
         type: Number,
-        default: '1'
+        default: 1
       },
       name: {
         type: String,
@@ -100,7 +100,7 @@
           accessKeyId: this.keySet.key,
           accessKeySecret: this.keySet.secret,
           // https时需要设置为true
-          secure: true,
+          // secure: true,
           bucket: this.keySet.bucket
         })
       },
