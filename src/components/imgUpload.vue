@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="form-container">
-    <el-form ref="form" label-width="80px">
+    <el-form ref="form" label-width="160px">
       <el-alert
         v-if="errorShow"
         :title="errorMsg"
@@ -43,8 +43,11 @@
         <vueOssUploader :path="path" :debug="true" :name-mode="nameMode" :keySet="keySet" :name="name" v-on:success="uploaded" @error="showError"></vueOssUploader>
       </el-form-item>
       <el-form-item label="上传后文件路径">
-      <p>{{filename}}</p>
-    </el-form-item>
+        <p>{{ossPath}}</p>
+      </el-form-item>
+      <el-form-item label="上传后文件链接">
+        <p>{{ossUrl}}</p>
+      </el-form-item>
     </el-form>
     
     
@@ -66,12 +69,14 @@
           region: 'shanghai',
           secret: ''
         },
-        filename: ''
+        ossPath: '',
+        ossUrl: ''
       }
     },
     methods: {
-      uploaded (filename) {
-        this.filename = 'https://' + this.keySet.bucket + '.oss-cn-' + this.keySet.region + '.aliyuncs.com/' + filename
+      uploaded ({ossPath, ossUrl}) {
+        this.ossPath = ossPath
+        this.ossUrl = ossUrl
       },
       showError (e) {
         this.errorShow = true

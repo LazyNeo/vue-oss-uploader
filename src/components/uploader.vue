@@ -113,7 +113,7 @@
           return
         }
         let file = e.target.files[0]
-        let storeAs = ''
+        let ossPath = ''
         if (!file) {
           alert('您未选择上传文件')
           return
@@ -129,17 +129,20 @@
           return
         }
         if (this.nameMode === 2) {
-          storeAs = this.path + file.name
+          ossPath = this.path + file.name
         } else if (this.nameMode === 3 && this.name.trim()) {
-          storeAs = this.path + this.name + this.get_suffix(file.name)
+          ossPath = this.path + this.name + this.get_suffix(file.name)
         } else {
           let token = file.name + file.lastModifiedDate + file.size + file.type
-          storeAs = this.path + md5(token) + this.get_suffix(file.name)
+          ossPath = this.path + md5(token) + this.get_suffix(file.name)
         }
-        this.debug && console.log(file.name + ' => ' + storeAs)
-        this.client.multipartUpload(storeAs, file).then((result) => {
+        this.debug && console.log(file.name + ' => ' + ossPath)
+        this.client.multipartUpload(ossPath, file).then((result) => {
           this.debug && console.log(result)
-          this.$emit('success', storeAs)
+          this.$emit('success', {
+            ossPath,
+            ossUrl: 'https://' + this.keySet.bucket + '.oss-cn-' + this.keySet.region + '.aliyuncs.com/' + ossPath
+          })
         }).catch((err) => {
           this.debug && console.log(err)
           this.$emit('error', err)

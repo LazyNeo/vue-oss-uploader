@@ -1,6 +1,6 @@
 {
   "name": "vue-oss-uploader",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "一个web直传阿里云oss插件",
   "author": "NeoPasser <535178368@qq.com>",
   "private": false,

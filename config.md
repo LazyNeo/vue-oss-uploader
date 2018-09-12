@@ -19,3 +19,10 @@ key|阿里云的accessKeyId|String|空字符串
 secret|阿里云的accessKeySecret|String|空字符串
 bucket|阿里云的bucket|String|空字符串
 region|阿里云所在区域|String|shanghai
+
+## 事件
+
+名称|说明|参数
+---|---|---
+error|错误事件|msg
+success|上传成功,返回路径和拼接的url|{ossPath,ossUrl}
