@@ -65,19 +65,19 @@
       this.id = 'upload-input-file' + Math.random()
       this.LoadJS('js_aliyun_oss', 'https://gosspublic.alicdn.com/aliyun-oss-sdk-4.10.0.min.js?time=' + Date.now())
     },
-    mounted () {
-      let timer = setInterval(() => {
-        if (window.OSS) {
-          this.init()
-          clearInterval(timer)
-          timer = null
-          this.debug && window.console.log('阿里云oss初始化完成')
-        } else {
-          this.debug && window.console.log('阿里云oss初始化中...')
-        }
-      }, 500)
-    },
     methods: {
+      preInit () {
+        let timer = setInterval(() => {
+          if (window.OSS) {
+            this.init()
+            clearInterval(timer)
+            timer = null
+            this.debug && window.console.log('阿里云oss初始化完成')
+          } else {
+            this.debug && window.console.log('阿里云oss初始化中...')
+          }
+        }, 500)
+      },
       init () {
         if (!this.keySet.bucket) {
           this.$emit('error', {msg: '请设置bucket'})
@@ -182,7 +182,7 @@
     watch: {
       keySet: {
         handler (val, old) {
-          this.init()
+          this.preInit()
         },
         deep: true
       }
