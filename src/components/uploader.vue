@@ -70,12 +70,12 @@
     mounted () {
       if (this.keySet && this.keySet.key) {
         this.localKeySet = this.keySet
-      } else if (Window._VueOssUploader) {
+      } else if (window._VueOssUploader) {
         this.localKeySet = {
-          key: Window._VueOssUploader.key,
-          region: Window._VueOssUploader.region,
-          secret: Window._VueOssUploader.secret,
-          bucket: Window._VueOssUploader.bucket
+          key: window._VueOssUploader.key,
+          region: window._VueOssUploader.region,
+          secret: window._VueOssUploader.secret,
+          bucket: window._VueOssUploader.bucket
         }
       } else {
         console.error('oss配置信息缺失')
