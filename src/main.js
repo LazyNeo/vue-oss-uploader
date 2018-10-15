@@ -6,7 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import vueOssUploader from './npm.js'
-Vue.use(vueOssUploader, {key: 'LTAInayeUomLIutQ', secret: 'm3UeVgRjJaq90TcPWHmW622yJkooFT', bucket: 'chulailuo', region: 'hangzhou'})
+Vue.use(vueOssUploader)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
