@@ -24,7 +24,7 @@ vue中引用
 // main.js 安装插件
 import vueOssUploader from 'vue-oss-uploader'
 import 'vue-oss-uploader/npm/static/css/vue-oss-uploader.min.css'
-Vue.use(vueOssUploader)
+Vue.use(vueOssUploader, {key: 'XXX', secret: 'XXXX', bucket: 'CCC', region: 'hangzhou'}")
 ```
 具体的配置项请查看[组件配置项](https://github.com/LazyNeo/vue-oss-uploader/blob/master/config.md)
 

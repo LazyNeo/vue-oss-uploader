@@ -1,8 +1,9 @@
 import uploader from './components/uploader.vue'
-console.log(uploader)
 const vueOssUploader = {
-  install: function (Vue) {
-    Vue.component('vueOssUploader',uploader)
+  install: function (Vue, config) {
+    console.log('vueOssUploader, install', config)
+    Window._VueOssUploader = config
+    Vue.component('vueOssUploader', uploader)
   }
 };
 // 这里的判断很重要

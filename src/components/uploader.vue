@@ -13,6 +13,7 @@
       return {
         id: 'upload-input-file',
         client: null,
+        localKeySet: {},
         imgReg: /\.(png|jpe?g|gif|svg)(\?.*)?$/
       }
     },
@@ -63,7 +64,23 @@
     },
     created () {
       this.id = 'upload-input-file' + Math.random()
-      this.LoadJS('js_aliyun_oss', 'https://gosspublic.alicdn.com/aliyun-oss-sdk-4.10.0.min.js?time=' + Date.now())
+      this.LoadJS('js_aliyun_oss', 'https://gosspublic.alicdn.com/aliyun-oss-sdk-4.10.0.min.js')
+      this.preInit()
+    },
+    mounted () {
+      if (this.keySet && this.keySet.key) {
+        this.localKeySet = this.keySet
+      } else if (Window._VueOssUploader) {
+        this.localKeySet = {
+          key: Window._VueOssUploader.key,
+          region: Window._VueOssUploader.region,
+          secret: Window._VueOssUploader.secret,
+          bucket: Window._VueOssUploader.bucket
+        }
+      } else {
+        console.error('oss配置信息缺失')
+        this.$emit('error', {msg: 'oss配置信息缺失'})
+      }
     },
     methods: {
       preInit () {
@@ -79,29 +96,29 @@
         }, 500)
       },
       init () {
-        if (!this.keySet.bucket) {
+        if (!this.localKeySet.bucket) {
           this.$emit('error', {msg: '请设置bucket'})
           return
         }
-        if (!this.keySet.secret) {
+        if (!this.localKeySet.secret) {
           this.$emit('error', {msg: '请设置secret'})
           return
         }
-        if (!this.keySet.key) {
+        if (!this.localKeySet.key) {
           this.$emit('error', {msg: '请设置key'})
           return
         }
-        if (!this.keySet.region) {
+        if (!this.localKeySet.region) {
           this.$emit('error', {msg: '请设置区域'})
           return
         }
         this.client = new OSS.Wrapper({
-          endpoint: 'https://oss-cn-' + this.keySet.region + '.aliyuncs.com',
-          accessKeyId: this.keySet.key,
-          accessKeySecret: this.keySet.secret,
+          endpoint: 'https://oss-cn-' + this.localKeySet.region + '.aliyuncs.com',
+          accessKeyId: this.localKeySet.key,
+          accessKeySecret: this.localKeySet.secret,
           // https时需要设置为true
           // secure: true,
-          bucket: this.keySet.bucket
+          bucket: this.localKeySet.bucket
         })
       },
       upload (e) {
@@ -138,10 +155,15 @@
         }
         this.debug && console.log(file.name + ' => ' + ossPath)
         this.client.multipartUpload(ossPath, file).then((result) => {
-          this.debug && console.log(result)
+          this.debug && console.log('oss result', result)
+          let url = result.url
+          // 处理错误的情况
+          if (!url) {
+            url = result.res.requestUrls[0].split('?')[0]
+          }
           this.$emit('success', {
             ossPath,
-            ossUrl: 'https://' + this.keySet.bucket + '.oss-cn-' + this.keySet.region + '.aliyuncs.com/' + ossPath
+            ossUrl: url
           })
         }).catch((err) => {
           this.debug && console.log(err)
