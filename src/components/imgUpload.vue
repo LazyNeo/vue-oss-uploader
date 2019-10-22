@@ -80,7 +80,7 @@
       },
       showError (e) {
         this.errorShow = true
-        console.log(e)
+        console.log('error:', e)
         this.errorMsg = e.msg || JSON.stringify(e)
       }
     }
