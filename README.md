@@ -49,7 +49,6 @@ key|阿里云的accessKeyId|String|空字符串
 secret|阿里云的accessKeySecret|String|空字符串
 bucket|阿里云的bucket|String|空字符串
 region|阿里云所在区域|String|shanghai
-https|是否开启https模式|Boolean|false
 
 #### 事件
 

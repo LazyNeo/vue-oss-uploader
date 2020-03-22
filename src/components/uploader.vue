@@ -64,7 +64,7 @@
     },
     created () {
       this.id = 'upload-input-file' + Math.random()
-      this.LoadJS('js_aliyun_oss', 'https://gosspublic.alicdn.com/aliyun-oss-sdk-4.10.0.min.js')
+      //this.LoadJS('js_aliyun_oss', 'https://gosspublic.alicdn.com/aliyun-oss-sdk-4.10.0.min.js')
       this.preInit()
     },
     mounted () {
@@ -78,7 +78,7 @@
           bucket: window._VueOssUploader.bucket
         }
       } else {
-        this.debug && console.error('oss配置信息缺失')
+        console.error('oss配置信息缺失')
         this.$emit('error', {msg: 'oss配置信息缺失'})
       }
     },
@@ -112,18 +112,14 @@
           this.$emit('error', {msg: '请设置区域'})
           return
         }
-        let set = {
+        this.client = new OSS.Wrapper({
           endpoint: 'https://oss-cn-' + this.localKeySet.region + '.aliyuncs.com',
           accessKeyId: this.localKeySet.key,
           accessKeySecret: this.localKeySet.secret,
-          bucket: this.localKeySet.bucket
-        }
-        // 是否开启https
-        if (this.localKeySet.https) {
           // https时需要设置为true
-          set.secure = true
-        }
-        this.client = new OSS.Wrapper(set)
+          // secure: true,
+          bucket: this.localKeySet.bucket
+        })
       },
       upload (e) {
         if (e.target.files.length === 0) {
@@ -157,7 +153,7 @@
           let token = file.name + file.lastModifiedDate + file.size + file.type
           ossPath = this.path + md5(token) + this.get_suffix(file.name)
         }
-        this.debug && console.log('上传文件：', file.name + ' => ' + ossPath)
+        this.debug && console.log(file.name + ' => ' + ossPath)
         this.client.multipartUpload(ossPath, file).then((result) => {
           this.debug && console.log('oss result', result)
           let url = result.url
@@ -208,7 +204,6 @@
     watch: {
       keySet: {
         handler (val, old) {
-          this.localKeySet = val
           this.preInit()
         },
         deep: true
